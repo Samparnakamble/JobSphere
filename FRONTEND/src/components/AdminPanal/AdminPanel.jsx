@@ -11,7 +11,7 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/api/v1/admin/all-users",
+          "https://jobsphere-5mks.onrender.com/api/v1/admin/all-users",
           {
             withCredentials: true,
           }
@@ -38,7 +38,7 @@ const AdminPanel = () => {
 
   const handleDeleteUser = async (userId, role) => {
     await axios
-      .delete(`http://localhost:8000/api/v1/admin/delete-user/${userId}`, {
+      .delete(`https://jobsphere-5mks.onrender.com/api/v1/admin/delete-user/${userId}`, {
         withCredentials: true,
       })
       .then((res) => {
