@@ -27,6 +27,9 @@ const App = () => {
         const response = await axios.get(
           "https://jobsphere-5mks.onrender.com/api/v1/user/getuser",
           {
+             headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure token is stored in localStorage
+              },
             withCredentials: true,
           }
         );
