@@ -5,19 +5,19 @@ import { Link, Navigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
+// import { Context } from "../../main";
 import { Context } from "../../main";
+// import { Context } from "../../context/main"; 
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-// Use environment variable for backend URL with a fallback for local development
-const BACKEND_URL = import.meta.env.REACT_APP_API_URL ";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+
   const { isAuthorized, setIsAuthorized } = useContext(Context);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // Added state for password visibility
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -27,7 +27,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${BACKEND_URL}/api/v1/user/login`,
+        "https://jobsphere-5mks.onrender.com/api/v1/user/login",
         { email, password, role },
         {
           headers: {
@@ -38,7 +38,8 @@ const Login = () => {
       );
 
       // Save token to localStorage
-      localStorage.setItem("token", data.token);
+      const token = data.token;
+      localStorage.setItem("token", token);
 
       toast.success(data.message);
       setEmail("");
@@ -62,11 +63,11 @@ const Login = () => {
             <img src="/jobLogo.png" alt="logo" />
             <h3>Login to your account</h3>
           </div>
-          <form onSubmit={handleLogin}>
+          <form>
             <div className="inputTag">
               <label>Login As</label>
               <div>
-                <select value={role} onChange={(e) => setRole(e.target.value)} required>
+                <select value={role} onChange={(e) => setRole(e.target.value)}>
                   <option value="">Select Role</option>
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
@@ -83,7 +84,6 @@ const Login = () => {
                   placeholder="example@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
                 />
                 <MdOutlineMailOutline />
               </div>
@@ -96,7 +96,6 @@ const Login = () => {
                   placeholder="Enter Your Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
                 <RiLock2Fill />
               </div>
@@ -106,12 +105,14 @@ const Login = () => {
                 <input
                   type="checkbox"
                   checked={isPasswordVisible}
-                  onChange={() => setIsPasswordVisible(!isPasswordVisible)}
+                  onChange={() => setIsPasswordVisible(!isPasswordVisible)} // Toggle visibility on checkbox change
                 />
                 Show Password
               </label>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" onClick={handleLogin}>
+              Login
+            </button>
             <Link to={"/register"}>Register Now</Link>
           </form>
         </div>
