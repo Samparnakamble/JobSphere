@@ -21,7 +21,7 @@ function MyApplication() {
     try {
       if (user && user.role === "Employer") {
         axios
-          .get("http://localhost:8000/api/v1/application/employer/getall", {
+          .get("https://jobsphere-5mks.onrender.com/api/v1/application/employer/getall", {
             withCredentials: true,
           })
           .then((res) => {
@@ -29,7 +29,7 @@ function MyApplication() {
           });
       } else {
         axios
-          .get("http://localhost:8000/api/v1/application/jobseeker/getall", {
+          .get("https://jobsphere-5mks.onrender.com/api/v1/application/jobseeker/getall", {
             withCredentials: true,
           })
           .then((res) => {
@@ -48,7 +48,7 @@ function MyApplication() {
   const deleteApplication = (id) => {
     try {
       axios
-        .delete(`http://localhost:8000/api/v1/application/delete/${id}`, {
+        .delete(`https://jobsphere-5mks.onrender.com/api/v1/application/delete/${id}`, {
           withCredentials: true,
         })
         .then((res) => {
