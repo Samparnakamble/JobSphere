@@ -19,7 +19,7 @@ dotenv.config({ path: "./config/config.env" });
 // ✅ Updated CORS Configuration
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://jobsphere-frontend.onrender.com",
+    origin: process.env.FRONTEND_URL || "https://jobsphere-5mks.onrender.com",
     credentials: true, // Allow cookies
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
