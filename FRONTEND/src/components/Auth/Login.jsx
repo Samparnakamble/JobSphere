@@ -10,7 +10,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 // Use environment variable for backend URL with a fallback for local development
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+const BACKEND_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:8000";
 
 const Login = () => {
   const [email, setEmail] = useState("");
