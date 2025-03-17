@@ -20,7 +20,7 @@ import { Toaster } from "react-hot-toast";
 import AboutPage from "./components/AboutPage/AboutPage";
 
 const App = () => {
-  const {  setIsAuthorized, setUser } = useContext(Context);
+  const {isAuthorized,  setIsAuthorized, setUser } = useContext(Context);
   useEffect(() => {
     const fetchUser = async () => {
       try {
