@@ -19,17 +19,18 @@ import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import AboutPage from "./components/AboutPage/AboutPage";
 
+// Use environment variable for backend URL with a fallback for local development
+const BACKEND_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/v1/user/getuser",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${BACKEND_URL}/api/v1/user/getuser`, {
+          withCredentials: true,
+        });
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {
@@ -45,18 +46,18 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/job/getall" element={<Jobs />}></Route>
-          <Route path="/job/:id" element={<JobDetails />}></Route>
-          <Route path="/job/post" element={<PostJobs />}></Route>
-          <Route path="/job/me" element={<MyJobs />}></Route>
-          <Route path="/application/:id" element={<Applications />}></Route>
-          <Route path="/applications/me" element={<MyApplications />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-          <Route path="/adminpanel" element={<AdminPanel />}></Route>
-          <Route path="/aboutpage" element={<AboutPage />}></Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/job/getall" element={<Jobs />} />
+          <Route path="/job/:id" element={<JobDetails />} />
+          <Route path="/job/post" element={<PostJobs />} />
+          <Route path="/job/me" element={<MyJobs />} />
+          <Route path="/application/:id" element={<Applications />} />
+          <Route path="/applications/me" element={<MyApplications />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/adminpanel" element={<AdminPanel />} />
+          <Route path="/aboutpage" element={<AboutPage />} />
         </Routes>
         <Footer />
         <Toaster />
