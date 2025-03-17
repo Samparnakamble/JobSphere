@@ -28,7 +28,7 @@ const HeroSection = () => {
     const fetchVisitCount = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8000/api/v1/visit/visit-count"
+          "https://jobsphere-5mks.onrender.com/api/v1/visit/visit-count"
         );
         setVisitCount(res.data.count);
       } catch (error) {
@@ -41,7 +41,7 @@ const HeroSection = () => {
       const updateVisitCount = async () => {
         try {
           const res = await axios.post(
-            "http://localhost:8000/api/v1/visit/update-visit"
+            "https://jobsphere-5mks.onrender.com/api/v1/visit/update-visit"
           );
           setVisitCount(res.data.count);
         } catch (error) {
