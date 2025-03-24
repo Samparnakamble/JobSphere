@@ -12,13 +12,27 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+       // Retrieve token from localStorage or sessionStorage
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+    if (!token) {
+      toast.error("No token found. Please log in again!");
+      setIsAuthorized(false);
+      navigateTo("/login");
+      return;
+    }
       const response = await axios.get(
         "https://jobsphere-5mks.onrender.com/api/v1/user/logout",
         {
+          headers: {
+          Authorization: `Bearer ${token}`,
+          },
           withCredentials: true,
         }
       );
       toast.success(response.data.message);
+         localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
       setIsAuthorized(false);
       navigateTo("/login");
     } catch (error) {
