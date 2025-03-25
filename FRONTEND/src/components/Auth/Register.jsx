@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { FaRegUser, FaPencilAlt, FaPhoneFlip } from "react-icons/fa";
+import { FaRegUser, FaPencilAlt, FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
 import { Link, Navigate } from "react-router-dom";
@@ -120,7 +120,7 @@ const Register = () => {
                 onChange={(e) => setPhone(e.target.value)}
                 required
               />
-              <FaPhoneFlip />
+             <FaPhoneAlt />
             </div>
           </div>
 
