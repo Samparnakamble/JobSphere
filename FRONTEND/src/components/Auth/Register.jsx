@@ -1,9 +1,7 @@
 import { useContext, useState, useEffect } from "react";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaPencilAlt, FaPhoneFlip } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
-import { FaPencilAlt } from "react-icons/fa";
-import { FaPhoneFlip } from "react-icons/fa6";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -17,7 +15,8 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // Added state for password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   const { isAuthorized, setIsAuthorized } = useContext(Context);
 
   useEffect(() => {
@@ -31,24 +30,31 @@ const Register = () => {
         "https://jobsphere-5mks.onrender.com/api/v1/user/register",
         { name, phone, email, role, password },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
 
-      toast.success(data.message);
-      // ✅ Store token in localStorage & sessionStorage
-      localStorage.setItem("token", data.token);
-      sessionStorage.setItem("token", data.token);
+      if (data.token) {
+        // ✅ Store token in localStorage & sessionStorage
+        localStorage.setItem("token", data.token);
+        sessionStorage.setItem("token", data.token);
 
+        // ✅ Set Axios default headers
+        axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+        toast.success(data.message);
+        setIsAuthorized(true);
+      } else {
+        throw new Error("Token missing in response");
+      }
+
+      // ✅ Clear form fields
       setName("");
       setEmail("");
-      setPassword("");
       setPhone("");
+      setPassword("");
       setRole("");
-      setIsAuthorized(true);
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
     }
@@ -59,99 +65,99 @@ const Register = () => {
   }
 
   return (
-    <>
-      <section className="authPage">
-        <div className="container" data-aos="fade-up">
-          <div className="header">
-            <img src="/jobLogo.png" alt="logo" />
-            <h3>Create a new account</h3>
+    <section className="authPage">
+      <div className="container" data-aos="fade-up">
+        <div className="header">
+          <img src="/jobLogo.png" alt="logo" />
+          <h3>Create a new account</h3>
+        </div>
+        <form onSubmit={handleRegister}>
+          <div className="inputTag">
+            <label>Register As</label>
+            <div>
+              <select value={role} onChange={(e) => setRole(e.target.value)} required>
+                <option value="">Select Role</option>
+                <option value="Employer">Employer</option>
+                <option value="Job Seeker">Job Seeker</option>
+              </select>
+              <FaRegUser />
+            </div>
           </div>
-          <form>
-            <div className="inputTag">
-              <label>Register As</label>
-              <div>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="">Select Role</option>
-                  <option value="Employer">Employer</option>
-                  <option value="Job Seeker">Job Seeker</option>
-                </select>
-                <FaRegUser />
-              </div>
+          <div className="inputTag">
+            <label>Name</label>
+            <div>
+              <input
+                type="text"
+                placeholder="Enter Your Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <FaPencilAlt />
             </div>
-            <div className="inputTag">
-              <label>Name</label>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Enter Your Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <FaPencilAlt />
-              </div>
+          </div>
+          <div className="inputTag">
+            <label>Email Address</label>
+            <div>
+              <input
+                type="email"
+                placeholder="Example@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <MdOutlineMailOutline />
             </div>
-            <div className="inputTag">
-              <label>Email Address</label>
-              <div>
-                <input
-                  type="email"
-                  placeholder="Example@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <MdOutlineMailOutline />
-              </div>
+          </div>
+          <div className="inputTag">
+            <label>Phone Number</label>
+            <div>
+              <input
+                type="text"
+                placeholder="+91 855 1234-567"
+                value={phone}
+                pattern="[2-9]{1}[0-9]{9}"
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+              <FaPhoneFlip />
             </div>
-            <div className="inputTag">
-              <label>Phone Number</label>
-              <div>
-                <input
-                  type="text"
-                  placeholder="+91 855 1234-567"
-                  value={phone}
-                  pattern="[2-9]{1}[0-9]{9}"
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                <FaPhoneFlip />
-              </div>
-            </div>
+          </div>
 
-            <div className="inputTag">
-              <label>Password</label>
-              <div className="passwordContainer">
-                <input
-                  type={isPasswordVisible ? "text" : "password"} // Toggle password visibility
-                  placeholder="Enter Your Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <RiLock2Fill />
-              </div>
+          <div className="inputTag">
+            <label>Password</label>
+            <div className="passwordContainer">
+              <input
+                type={isPasswordVisible ? "text" : "password"}
+                placeholder="Enter Your Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <RiLock2Fill />
             </div>
+          </div>
 
-            {/* Show Password Checkbox */}
-            <div className="showPasswordCheckbox">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isPasswordVisible}
-                  onChange={() => setIsPasswordVisible(!isPasswordVisible)} // Toggle visibility on checkbox change
-                />
-                Show Password
-              </label>
-            </div>
+          {/* Show Password Checkbox */}
+          <div className="showPasswordCheckbox">
+            <label>
+              <input
+                type="checkbox"
+                checked={isPasswordVisible}
+                onChange={() => setIsPasswordVisible(!isPasswordVisible)}
+              />
+              Show Password
+            </label>
+          </div>
 
-            <button type="submit" onClick={handleRegister}>
-              Register
-            </button>
-            <Link to={"/login"}>Login Now</Link>
-          </form>
-        </div>
-        <div className="banner">
-          <img src="/register.png" alt="login" />
-        </div>
-      </section>
-    </>
+          <button type="submit">Register</button>
+          <Link to={"/login"}>Login Now</Link>
+        </form>
+      </div>
+      <div className="banner">
+        <img src="/register.png" alt="register" />
+      </div>
+    </section>
   );
 };
 
