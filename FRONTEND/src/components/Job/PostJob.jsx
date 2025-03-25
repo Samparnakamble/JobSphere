@@ -143,7 +143,7 @@ const PostJob = () => {
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location"
+              placeholder="Work Location (Remote / Onsite)"
             />
             <div className="salary_wrapper">
               <select
