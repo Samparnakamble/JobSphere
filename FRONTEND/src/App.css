@@ -1620,9 +1620,9 @@ nav .hamburger {
     justify-content: flex-start;
 
     padding-left: 25px;
-    box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.55);
+    -webkit-box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.55);
   }
 
   nav .show-menu li a {
