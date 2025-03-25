@@ -37,6 +37,11 @@ const Register = () => {
           withCredentials: true,
         }
       );
+
+      // ✅ Store token in localStorage & sessionStorage
+      localStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data.token);
+
       toast.success(data.message);
       setName("");
       setEmail("");
@@ -45,7 +50,7 @@ const Register = () => {
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Registration failed");
     }
   };
 
