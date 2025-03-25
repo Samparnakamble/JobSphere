@@ -38,11 +38,11 @@ const Register = () => {
         }
       );
 
+      toast.success(data.message);
       // ✅ Store token in localStorage & sessionStorage
       localStorage.setItem("token", data.token);
       sessionStorage.setItem("token", data.token);
 
-      toast.success(data.message);
       setName("");
       setEmail("");
       setPassword("");
